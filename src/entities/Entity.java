@@ -1,4 +1,4 @@
-package entities;
+package src.entities;
 
 public abstract class Entity {
     private int x;
@@ -25,5 +25,5 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public abstract String display();
+    public abstract char display();
 }

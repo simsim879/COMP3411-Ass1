@@ -17,11 +17,11 @@ public class Island extends Entity {
     }
 
     public char IslandValueToChar() {
-        return (char) ((value > 9)? (value - 10 + 'a') : (value - 10 + '0'));
+        return Character.forDigit(value, 13);
     }
 
     @Override
-    public String display() {
-        return Integer.toString(value);
+    public char display() {
+        return this.IslandValueToChar();
     }
 }

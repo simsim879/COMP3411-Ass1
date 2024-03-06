@@ -7,7 +7,7 @@ public class Water extends Entity {
     }
 
     @Override
-    public String display() {
-        return " ";
+    public char display() {
+        return ' ';
     }
 }
