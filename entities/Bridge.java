@@ -1,25 +1,26 @@
+package entities;
+
 public class Bridge extends Entity {
 
-    public enum BridgeNum {
-        SINGLE, DOUBLE, TRIPLE
-    }
-
-    private BridgeNum bridgeNum;
+    private int planks;
     private boolean isHorizontal;
 
-    public Bridge(int x, int y, BridgeNum bridgeNum, boolean isHorizontal) {
+    public Bridge(int x, int y, int planks, boolean isHorizontal) {
         super(x, y);
-        this.bridgeNum = bridgeNum;
+        this.planks = planks;
         this.isHorizontal = isHorizontal;
     }
 
-    public BridgeNum getBridgeNum() {
-        return bridgeNum;
+    public int getPlanks() {
+        return planks;
     }
 
-    public void setBridgeNum(BridgeNum bridgeNum) {
-        this.bridgeNum = bridgeNum;
+
+
+    public void setPlanks(int planks) {
+        this.planks = planks;
     }
+
 
     public boolean isHorizontal() {
         return isHorizontal;
@@ -31,16 +32,15 @@ public class Bridge extends Entity {
 
     @Override
     public String display() {
-        switch (bridgeNum) {
-            case SINGLE:
+        switch (planks) {
+            case 1:
                 return isHorizontal ? "-" : "|";
-            case DOUBLE:
+            case 2:
                 return isHorizontal ? "=" : "\"";
-            case TRIPLE:
+            case 3:
                 return isHorizontal ? "E" : "#";
             default:
-                return " ";
+                return "?";
         }
     }
-
 }

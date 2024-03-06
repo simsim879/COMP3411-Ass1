@@ -1,3 +1,5 @@
+package entities;
+
 public class Water extends Entity {
 
     public Water(int x, int y) {
@@ -6,6 +8,6 @@ public class Water extends Entity {
 
     @Override
     public String display() {
-        return ".";
+        return " ";
     }
 }

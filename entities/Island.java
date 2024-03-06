@@ -3,7 +3,7 @@ public class Island extends Entity {
 
     public Island(int x, int y, char value) {
         super(x,y);
-        this.value = value - '0';
+        this.value = ('0' < value && '9' >= value)? (0 + value - '0') : (10 + value - 'a');
     }
 
     public int getIslandValue() {
@@ -15,15 +15,7 @@ public class Island extends Entity {
     }
 
     public char IslandValueToChar() {
-        switch (value) {
-            case 10:
-                return 'a';
-            case 11:
-                return 'b';
-            case 12:
-                return 'c';
-        }
-        return '!';
+        return (char) ((value > 9)? (value - 10 + 'a') : (value - 10 + '0'));
     }
 
     @Override
