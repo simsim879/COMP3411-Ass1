@@ -7,17 +7,17 @@ public class GameMap {
     private int width;
     private int height;
 
-    public GameMap(char[][] inputMap) {
-        this.width = inputMap.length;
-        this.height = inputMap[0].length;
+    public GameMap(char[][] inputMap, int width, int height) {
+        this.width = width;
+        this.height = height;
         this.gameMap = new Entity[height][width];
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                char element = inputMap[col][row];
+                char element = inputMap[row][col];
                 if (element == '.') {
-                    gameMap[col][row] = new Water(col,row);
+                    gameMap[row][col] = new Water(col,row);
                 } else {
-                    gameMap[col][row] = new Island(col, row, element);
+                    gameMap[row][col] = new Island(col, row, element);
                 }
             }
         }
@@ -26,7 +26,7 @@ public class GameMap {
     public void displayMap() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                System.out.print(gameMap[col][row].display());
+                System.out.print(gameMap[row][col].display());
             }
             System.out.println();
         }
