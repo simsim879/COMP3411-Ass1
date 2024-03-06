@@ -31,16 +31,16 @@ public class Bridge extends Entity {
     }
 
     @Override
-    public String display() {
+    public char display() {
         switch (planks) {
             case 1:
-                return isHorizontal ? "-" : "|";
+                return isHorizontal ? '-' : '|';
             case 2:
-                return isHorizontal ? "=" : "\"";
+                return isHorizontal ? '=' : '\"';
             case 3:
-                return isHorizontal ? "E" : "#";
+                return isHorizontal ? 'E' : '#';
             default:
-                return "?";
+                return '?';
         }
     }
 }
