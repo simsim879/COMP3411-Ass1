@@ -5,16 +5,15 @@ public class Bridge extends Entity {
     private int planks;
     private boolean isHorizontal;
 
-    public Bridge(int x, int y, int planks, boolean isHorizontal) {
-        super(x, y);
+    public Bridge(int row, int col, int planks, boolean horizontal) {
+        super(row, col);
         this.planks = planks;
-        this.isHorizontal = isHorizontal;
+        this.isHorizontal = horizontal;
     }
 
     public int getPlanks() {
         return planks;
     }
-
 
 
     public void setPlanks(int planks) {

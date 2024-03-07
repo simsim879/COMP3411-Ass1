@@ -32,9 +32,15 @@ public class GameMap {
         }
     }
 
-    public void addBridge(int col, int row, Bridge bridge) {
-        if (col >= 0 && col < width && row >= 0 && row < height) {
-            gameMap[col][row] = bridge;
+    public void addBridge(int row1, int col1, int row2, int col2, int planks, boolean isHorizontal) {
+        int startCol = Math.min(col1, col2);
+        int startRow = Math.min(row1, row2);
+        int endCol = Math.max(col1, col2);
+        int endRow = Math.max(row1, row2);
+        for (int row = startRow; row <= endRow; row++) {
+            for (int col = startCol; col <= endCol; col++) {
+                gameMap[startRow][startCol] = new Bridge(startRow, startCol, planks, isHorizontal);
+            }
         }
     }
 }
