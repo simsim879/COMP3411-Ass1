@@ -18,7 +18,6 @@ public class Hashi {
 
         GameMap map = new GameMap(inputMap,numCols,numRows);
         map.addBridge(1,4, 1,7, 1, true);
-        map.removeBridge(1,4, 1,7,true);
         map.displayMap();
     }
 }
