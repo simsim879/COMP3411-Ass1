@@ -1,29 +1,29 @@
 package src.entities;
 
 public abstract class Entity {
-    private int x;
-    private int y;
+    private int col;
+    private int row;
 
-    public Entity(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Entity(int col, int row) {
+        this.col = col;
+        this.row = row;
     }
 
-    public int getXCord() {
-        return this.x;
+    public int getCol() {
+        return this.col;
     }
 
-    public int getYCord() {
-        return this.y;
-    }
-
-    public void setXCord(int x) {
-        this.x = x;
-    }
-
-    public void setYCord(int y) {
-        this.y = y;
+    public int getRow() {
+        return this.row;
     }
 
     public abstract char display();
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
 }

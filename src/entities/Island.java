@@ -39,38 +39,39 @@ public class Island extends Entity {
     }
 
     public void findHorizontalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
-        for (int col = island.getYCord() - 1; col >= 0; col--) {
-            if (!(gameMap[island.getXCord()][col] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, island.getXCord(), col));
+        for (int col = island.getCol() - 1; col >= 0; col--) {
+            if (!(gameMap[island.getRow()][col] instanceof Water)) {
+                island.potentialConnections.add(getIslandAt(islands, island.getRow(), col));
                 break;
             }
         }
-        for (int col = island.getYCord() + 1; col < gameMap[0].length; col++) {
-            if (!(gameMap[island.getXCord()][col] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, island.getXCord(), col));
+    
+        for (int col = island.getCol() + 1; col < gameMap[0].length; col++) {
+            if (!(gameMap[island.getRow()][col] instanceof Water)) {
+                island.potentialConnections.add(getIslandAt(islands, island.getRow(), col));
                 break;
             }
         }
     }
 
     public void findVerticalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
-        for (int row = island.getXCord() - 1; row >= 0; row--) {
-            if (!(gameMap[row][island.getYCord()] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, row, island.getYCord()));
+        for (int row = island.getRow() - 1; row >= 0; row--) {
+            if (!(gameMap[row][island.getCol()] instanceof Water)) {
+                island.potentialConnections.add(getIslandAt(islands, row, island.getCol()));
                 break;
             }
         }
-        for (int row = island.getXCord() + 1; row < gameMap.length; row++) {
-            if (!(gameMap[row][island.getYCord()] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, row, island.getYCord()));
+        for (int row = island.getRow() + 1; row < gameMap.length; row++) {
+            if (!(gameMap[row][island.getCol()] instanceof Water)) {
+                island.potentialConnections.add(getIslandAt(islands, row, island.getCol()));
                 break;
             }
         }
     }
 
-    public Island getIslandAt(List<Island> islands, int x, int y) {
+    public Island getIslandAt(List<Island> islands, int row, int col) {
         for (Island island : islands) {
-            if (island.getXCord() == x && island.getYCord() == y) {
+            if (island.getCol() == col && island.getRow() == row) {
                 return island;
             }
         }

@@ -17,7 +17,8 @@ public class Hashi {
         }
 
         GameMap map = new GameMap(inputMap,numCols,numRows);
-        map.addBridge(1,4, 1,7, 1, true);
-        map.displayMap();
+        Solver solver = new Solver(map);
+        solver.solve();
+        solver.getGameMap().displayMap();
     }
 }
