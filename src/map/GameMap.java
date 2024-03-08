@@ -1,11 +1,15 @@
 package src.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import src.entities.*;
 
 public class GameMap {
     private Entity[][] gameMap;
     private int width;
     private int height;
+    List<Island> islands = new ArrayList<>();
 
     public GameMap(char[][] inputMap, int width, int height) {
         this.width = width;
@@ -17,7 +21,9 @@ public class GameMap {
                 if (element == '.') {
                     gameMap[row][col] = new Water(col,row);
                 } else {
-                    gameMap[row][col] = new Island(col, row, element);
+                    Island newIsland = new Island(col, row, element);
+                    gameMap[row][col] = newIsland;
+                    islands.add(newIsland);
                 }
             }
         }
@@ -42,5 +48,13 @@ public class GameMap {
                 gameMap[startRow][startCol] = new Bridge(startRow, startCol, planks, isHorizontal);
             }
         }
+    }
+
+    public Entity[][] getGameMap(GameMap map) {
+        return map.gameMap;
+    }
+
+    public List<Island> getIslandList() {
+        return this.islands;
     }
 }
