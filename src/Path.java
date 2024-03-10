@@ -20,7 +20,7 @@ public class Path {
         int startRow = isHorizontal ? Math.min(row1, row2) : Math.min(row1, row2) + 1;
         int endCol = isHorizontal ? Math.max(col1, col2) - 1 : Math.max(col1, col2);
         int endRow = isHorizontal ? Math.max(row1, row2) : Math.max(row1, row2) - 1;
-        
+
         this.startCol = startCol;
         this.startRow = startRow;
         this.endCol = endCol;

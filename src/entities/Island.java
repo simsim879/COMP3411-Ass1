@@ -31,24 +31,27 @@ public class Island extends Entity {
         return this.IslandValueToChar();
     }
 
-    public void findPotentialConnections(Entity[][] gameMap, List<Island> islands) {
+    public List<Island> findPotentialConnections(Entity[][] gameMap, List<Island> islands) {
         for (Island island : islands) {
             findHorizontalConnections(gameMap, island, islands);
             findVerticalConnections(gameMap, island, islands);
         }
+        return this.potentialConnections;
     }
 
     public void findHorizontalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
         for (int col = island.getCol() - 1; col >= 0; col--) {
-            if (!(gameMap[island.getRow()][col] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, island.getRow(), col));
+            Entity potIsland = gameMap[island.getRow()][col];
+            if (potIsland instanceof Island) {
+                island.potentialConnections.add((Island) potIsland);
                 break;
             }
         }
-    
+
         for (int col = island.getCol() + 1; col < gameMap[0].length; col++) {
-            if (!(gameMap[island.getRow()][col] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, island.getRow(), col));
+            Entity potIsland = gameMap[island.getRow()][col];
+            if (potIsland instanceof Island) {
+                island.potentialConnections.add((Island) potIsland);
                 break;
             }
         }
@@ -56,32 +59,23 @@ public class Island extends Entity {
 
     public void findVerticalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
         for (int row = island.getRow() - 1; row >= 0; row--) {
-            if (!(gameMap[row][island.getCol()] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, row, island.getCol()));
+            Entity pot_island = gameMap[row][island.getCol()];
+            if (pot_island instanceof Island) {
+                island.potentialConnections.add((Island)pot_island);
                 break;
             }
         }
         for (int row = island.getRow() + 1; row < gameMap.length; row++) {
-            if (!(gameMap[row][island.getCol()] instanceof Water)) {
-                island.potentialConnections.add(getIslandAt(islands, row, island.getCol()));
+            Entity pot_island = gameMap[row][island.getCol()];
+            if (pot_island instanceof Island) {
+                island.potentialConnections.add((Island) pot_island);
                 break;
             }
         }
-    }
-
-    public Island getIslandAt(List<Island> islands, int row, int col) {
-        for (Island island : islands) {
-            if (island.getCol() == col && island.getRow() == row) {
-                return island;
-            }
-        }
-        return null;
     }
 
     public List<Island> getPotentialIslands() {
         return this.potentialConnections;
     }
-
-
 
 }

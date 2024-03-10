@@ -29,13 +29,12 @@ public class Solver {
             return solve(islandIndex + 1);
         }
 
-        for (Island targetIsland : currentIsland.getPotentialIslands()) {
+        for (Island targetIsland : currentIsland.findPotentialConnections(gameMap.getMap(), gameMap.getIslandList())) {
             for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, bridgeCount)) {
                     gameMap.addBridges(targetIsland, currentIsland, bridgeCount);
                     currentIsland.setIslandValue(currentIsland.getIslandValue() - bridgeCount);
                     targetIsland.setIslandValue(targetIsland.getIslandValue() - bridgeCount);
-
                     if (solve(islandIndex + 1)) {
                         return true;
                     }
