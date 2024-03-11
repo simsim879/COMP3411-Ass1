@@ -28,6 +28,12 @@ public class GameMap {
                 }
             }
         }
+        for (Island island : islands) {
+            island.findPotentialConnections(map, islands);
+        } 
+        // for (Island island : islands) {
+        //     System.out.println(island.display());
+        // }
     }
 
     public void displayMap() {

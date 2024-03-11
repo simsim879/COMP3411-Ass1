@@ -31,15 +31,14 @@ public class Island extends Entity {
         return this.IslandValueToChar();
     }
 
-    public List<Island> findPotentialConnections(Entity[][] gameMap, List<Island> islands) {
+    public void findPotentialConnections(Entity[][] gameMap, List<Island> islands) {
         for (Island island : islands) {
             findHorizontalConnections(gameMap, island, islands);
             findVerticalConnections(gameMap, island, islands);
         }
-        return this.potentialConnections;
     }
 
-    public void findHorizontalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
+    private void findHorizontalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
         for (int col = island.getCol() - 1; col >= 0; col--) {
             Entity potIsland = gameMap[island.getRow()][col];
             if (potIsland instanceof Island) {
@@ -57,7 +56,7 @@ public class Island extends Entity {
         }
     }
 
-    public void findVerticalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
+    private void findVerticalConnections(Entity[][] gameMap, Island island, List<Island> islands) {
         for (int row = island.getRow() - 1; row >= 0; row--) {
             Entity pot_island = gameMap[row][island.getCol()];
             if (pot_island instanceof Island) {
