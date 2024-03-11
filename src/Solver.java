@@ -24,8 +24,11 @@ public class Solver {
     }
 
     private boolean solve(int islandIndex) {
-        if (islandIndex == islands.size() - 1) {
-            return allIslandsSatisfied();
+        if (isSolved(islands)) {
+            return true;
+        }
+        if (islandIndex >= islands.size()) {
+            return false;
         }
 
         Island currentIsland = islands.get(islandIndex);
@@ -51,18 +54,14 @@ public class Solver {
             }
         }
         System.out.println(islandIndex);
-        return false;
+        return solve(islandIndex + 1);
     }
 
 
-    private boolean allIslandsSatisfied() {
-        for (Island island : islands) {
-            if (island.getIslandValue() != 0) {
-                return false;
-            }
-        }
-        return true;
+    private boolean isSolved(List<Island> islands) {
+        return islands.stream().allMatch(island -> island.getIslandValue() == 0);
     }
+    
 
     public GameMap getGameMap() {
         return gameMap;
