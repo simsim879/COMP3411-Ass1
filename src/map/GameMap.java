@@ -52,7 +52,7 @@ public class GameMap {
                 map[row][col] = new Bridge(row, col, planks, path.isHorizontal);
             }
         }
-        System.out.printf("added %d to %d,%d\n", planks, island1.getCol(), island1.getRow());
+        // System.out.printf("added %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
         island1.setIslandValue(-planks);
         island2.setIslandValue(-planks);
     }
@@ -66,7 +66,7 @@ public class GameMap {
                 map[row][col] = new Water(row, col);
             }
         }
-        System.out.printf("removed %d to %d,%d\n", planks, island1.getCol(), island1.getRow());
+        // System.out.printf("removed %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
         island1.setIslandValue(planks);
         island2.setIslandValue(planks);
     }

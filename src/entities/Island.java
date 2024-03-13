@@ -22,13 +22,9 @@ public class Island extends Entity {
         this.value += value;
     }
 
-    public char IslandValueToChar() {
-        return Character.forDigit(value, 13);
-    }
-
     @Override
     public char display() {
-        return this.IslandValueToChar();
+        return Character.forDigit(value, 13);
     }
 
     public void findPotentialConnections(Entity[][] gameMap) {

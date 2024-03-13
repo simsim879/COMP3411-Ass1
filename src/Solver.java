@@ -43,8 +43,7 @@ public class Solver {
                         return true;
                     }
                     gameMap.removeBridges(targetIsland, currentIsland);
-                    System.out.printf("%d at (%d, %d):%c target: (%d,%d) \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow());
-                    System.out.printf("current island: %d, Target island: %d\n", currentIsland.getIslandValue(), targetIsland.getIslandValue());
+                    System.out.printf("%d at (%d, %d):%c target: (%d, %d): %c \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow(),currentIsland.display());
                 }
             }
         }
