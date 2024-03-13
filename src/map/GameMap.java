@@ -29,8 +29,8 @@ public class GameMap {
             }
         }
         for (Island island : islands) {
-            island.findPotentialConnections(map, islands);
-        } 
+            island.findPotentialConnections(map);
+        }
         // for (Island island : islands) {
         //     System.out.println(island.display());
         // }
@@ -72,6 +72,10 @@ public class GameMap {
                     return false;
                 }
             }
+        }
+
+        if (bridgeCount > currentIsland.getIslandValue() || bridgeCount > targetIsland.getIslandValue()) {
+            return false;
         }
         return true;
 

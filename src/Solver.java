@@ -1,6 +1,5 @@
 package src;
 
-import java.util.ArrayList;
 import java.util.List;
 import src.entities.Island;
 import src.map.GameMap;
@@ -35,9 +34,8 @@ public class Solver {
         if (currentIsland.getIslandValue() == 0) {
             return solve(islandIndex + 1);
         }
-        
+
         for (Island targetIsland : currentIsland.getPotentialIslands()) {
-            // System.out.printf("%d at (%d, %d):%c target: (%d,%d) \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow());
             for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, bridgeCount)) {
                     gameMap.addBridges(targetIsland, currentIsland, bridgeCount);
@@ -47,6 +45,7 @@ public class Solver {
                         return true;
                     }
                     System.out.printf("%d at (%d, %d):%c target: (%d,%d) \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow());
+                    System.out.printf("current island: %d, Target island: %d", currentIsland.getIslandValue(), targetIsland.getIslandValue());
                     gameMap.removeBridges(targetIsland, currentIsland);
                     currentIsland.setIslandValue(currentIsland.getIslandValue() + bridgeCount);
                     targetIsland.setIslandValue(targetIsland.getIslandValue() + bridgeCount);
@@ -54,14 +53,13 @@ public class Solver {
             }
         }
         System.out.println(islandIndex);
-        return solve(islandIndex + 1);
+        return false;
     }
 
 
     private boolean isSolved(List<Island> islands) {
         return islands.stream().allMatch(island -> island.getIslandValue() == 0);
     }
-    
 
     public GameMap getGameMap() {
         return gameMap;
