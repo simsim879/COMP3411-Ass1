@@ -53,8 +53,8 @@ public class GameMap {
             }
         }
         // System.out.printf("added %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
-        island1.setIslandValue(-planks);
-        island2.setIslandValue(-planks);
+        island1.setBridgesNeed(-planks);
+        island2.setBridgesNeed(-planks);
     }
 
     public void removeBridges(Island island1, Island island2) {
@@ -67,13 +67,13 @@ public class GameMap {
             }
         }
         // System.out.printf("removed %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
-        island1.setIslandValue(planks);
-        island2.setIslandValue(planks);
+        island1.setBridgesNeed(planks);
+        island2.setBridgesNeed(planks);
     }
 
     public boolean canPlaceBridges(Island currentIsland, Island targetIsland, int planks) {
 
-        if (planks > currentIsland.getIslandValue() || planks > targetIsland.getIslandValue()) {
+        if (planks > currentIsland.getBridgesNeed() || planks > targetIsland.getBridgesNeed()) {
             return false;
         }
         Path path = new Path(currentIsland, targetIsland);

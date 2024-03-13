@@ -6,20 +6,22 @@ import java.util.List;
 
 public class Island extends Entity {
     private int value = 0;
+    private int bridgesNeed;
 
     List<Island> potentialConnections = new ArrayList<>();
 
     public Island(int x, int y, char value) {
         super(x,y);
         this.value = ('0' < value && '9' >= value)? (0 + value - '0') : (10 + value - 'a');
+        this.bridgesNeed = this.value;
     }
 
-    public int getIslandValue() {
-        return value;
+    public int getBridgesNeed() {
+        return bridgesNeed;
     }
 
-    public void setIslandValue(int value) {
-        this.value += value;
+    public void setBridgesNeed(int value) {
+        this.bridgesNeed += value;
     }
 
     @Override
