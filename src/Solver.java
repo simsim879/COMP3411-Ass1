@@ -39,20 +39,16 @@ public class Solver {
             for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, bridgeCount)) {
                     gameMap.addBridges(targetIsland, currentIsland, bridgeCount);
-                    currentIsland.setIslandValue(currentIsland.getIslandValue() - bridgeCount);
-                    targetIsland.setIslandValue(targetIsland.getIslandValue() - bridgeCount);
                     if (solve(islandIndex + 1)) {
                         return true;
                     }
-                    System.out.printf("%d at (%d, %d):%c target: (%d,%d) \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow());
-                    System.out.printf("current island: %d, Target island: %d", currentIsland.getIslandValue(), targetIsland.getIslandValue());
                     gameMap.removeBridges(targetIsland, currentIsland);
-                    currentIsland.setIslandValue(currentIsland.getIslandValue() + bridgeCount);
-                    targetIsland.setIslandValue(targetIsland.getIslandValue() + bridgeCount);
+                    System.out.printf("%d at (%d, %d):%c target: (%d,%d) \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow());
+                    System.out.printf("current island: %d, Target island: %d\n", currentIsland.getIslandValue(), targetIsland.getIslandValue());
                 }
             }
         }
-        System.out.println(islandIndex);
+        // System.out.println(islandIndex);
         return false;
     }
 

@@ -52,31 +52,39 @@ public class GameMap {
                 map[row][col] = new Bridge(row, col, planks, path.isHorizontal);
             }
         }
+        System.out.printf("added %d to %d,%d\n", planks, island1.getCol(), island1.getRow());
+        island1.setIslandValue(-planks);
+        island2.setIslandValue(-planks);
     }
 
     public void removeBridges(Island island1, Island island2) {
         Path path = new Path(island1, island2);
+        int planks = 0;
         for (int row = path.startRow; row <= path.endRow; row++) {
             for (int col = path.startCol; col <= path.endCol; col++) {
+                planks = ((Bridge) map[row][col]).getPlanks();
                 map[row][col] = new Water(row, col);
             }
         }
+        System.out.printf("removed %d to %d,%d\n", planks, island1.getCol(), island1.getRow());
+        island1.setIslandValue(planks);
+        island2.setIslandValue(planks);
     }
 
-    public boolean canPlaceBridges(Island currentIsland, Island targetIsland, int bridgeCount) {
+    public boolean canPlaceBridges(Island currentIsland, Island targetIsland, int planks) {
 
+        if (planks > currentIsland.getIslandValue() || planks > targetIsland.getIslandValue()) {
+            return false;
+        }
         Path path = new Path(currentIsland, targetIsland);
         for (int row = path.startRow; row <= path.endRow; row++) {
             for (int col = path.startCol; col <= path.endCol; col++) {
-                if (!(map[row][col] instanceof Water) || targetIsland.getIslandValue() == 0 ) {
+                if (!(map[row][col] instanceof Water)) {
                     return false;
                 }
             }
         }
 
-        if (bridgeCount > currentIsland.getIslandValue() || bridgeCount > targetIsland.getIslandValue()) {
-            return false;
-        }
         return true;
 
     }

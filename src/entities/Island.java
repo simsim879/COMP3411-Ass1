@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class Island extends Entity {
-    private int value;
+    private int value = 0;
 
     List<Island> potentialConnections = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class Island extends Entity {
     }
 
     public void setIslandValue(int value) {
-        this.value = value;
+        this.value += value;
     }
 
     public char IslandValueToChar() {
