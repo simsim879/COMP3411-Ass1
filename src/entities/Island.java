@@ -5,66 +5,59 @@ import java.util.List;
 
 
 public class Island extends Entity {
-    private int value = 0;
-    private int bridgesNeed;
+    private final int initialValue;
+    private int bridgesNeeded;
 
-    List<Island> potentialConnections = new ArrayList<>();
+    private final List<Island> potentialConnections = new ArrayList<>();
 
     public Island(int x, int y, char value) {
-        super(x,y);
-        this.value = ('0' < value && '9' >= value)? (0 + value - '0') : (10 + value - 'a');
-        this.bridgesNeed = this.value;
+        super(x, y);
+        this.initialValue = convertCharToInt(value);
+        this.bridgesNeeded = this.initialValue;
     }
 
-    public int getBridgesNeed() {
-        return bridgesNeed;
+    private int convertCharToInt(char value) {
+        if (value >= '0' && value <= '9') {
+            return value - '0';
+        } else {
+            return 10 + value - 'a';
+        }
     }
 
-    public void setBridgesNeed(int value) {
-        this.bridgesNeed += value;
+    public int getBridgesNeeded() {
+        return bridgesNeeded;
+    }
+
+    public void adjustBridgesNeeded(int delta) {
+        this.bridgesNeeded += delta;
     }
 
     @Override
     public char display() {
-        return Character.forDigit(value, 13);
+        return Character.forDigit(initialValue, 13);
     }
 
     public void findPotentialConnections(Entity[][] gameMap) {
-            findHorizontalConnections(gameMap);
-            findVerticalConnections(gameMap);
+        scanForPotentialConnections(gameMap, true);
+        scanForPotentialConnections(gameMap, false);
     }
 
-    private void findHorizontalConnections(Entity[][] gameMap) {
-        for (int col = this.getCol() - 1; col >= 0; col--) {
-            Entity potIsland = gameMap[this.getRow()][col];
-            if (potIsland instanceof Island) {
-                this.potentialConnections.add((Island) potIsland);
-                break;
-            }
-        }
+    private void scanForPotentialConnections(Entity[][] gameMap, boolean horizontal) {
+        int[] directions = {-1, 1};
+        for (int direction : directions) {
+            int x = getCol(), y = getRow();
+            while (true) {
+                if (horizontal) x += direction; else y += direction;
 
-        for (int col = this.getCol() + 1; col < gameMap[0].length; col++) {
-            Entity potIsland = gameMap[this.getRow()][col];
-            if (potIsland instanceof Island) {
-                this.potentialConnections.add((Island) potIsland);
-                break;
-            }
-        }
-    }
-
-    private void findVerticalConnections(Entity[][] gameMap) {
-        for (int row = this.getRow() - 1; row >= 0; row--) {
-            Entity pot_island = gameMap[row][this.getCol()];
-            if (pot_island instanceof Island) {
-                this.potentialConnections.add((Island)pot_island);
-                break;
-            }
-        }
-        for (int row = this.getRow() + 1; row < gameMap.length; row++) {
-            Entity pot_island = gameMap[row][this.getCol()];
-            if (pot_island instanceof Island) {
-                this.potentialConnections.add((Island) pot_island);
-                break;
+                if (x < 0 || x >= gameMap[0].length || y < 0 || y >= gameMap.length) {
+                    break;
+                }
+                Entity potentialIsland = gameMap[y][x];
+                
+                if (potentialIsland instanceof Island) {
+                    potentialConnections.add((Island) potentialIsland);
+                    break;
+                }
             }
         }
     }
