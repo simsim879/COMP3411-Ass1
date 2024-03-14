@@ -52,7 +52,6 @@ public class GameMap {
                 map[row][col] = new Bridge(row, col, planks, path.isHorizontal);
             }
         }
-        // System.out.printf("added %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
         island1.setBridgesNeed(-planks);
         island2.setBridgesNeed(-planks);
     }
@@ -66,7 +65,6 @@ public class GameMap {
                 map[row][col] = new Water(row, col);
             }
         }
-        // System.out.printf("removed %d to (%d, %d) (%d, %d)\n", planks, island2.getCol(), island2.getRow(), island1.getCol(), island1.getRow());
         island1.setBridgesNeed(planks);
         island2.setBridgesNeed(planks);
     }

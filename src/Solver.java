@@ -39,15 +39,13 @@ public class Solver {
             for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, bridgeCount)) {
                     gameMap.addBridges(targetIsland, currentIsland, bridgeCount);
-                    System.out.printf("%d at (%d, %d):%c target: (%d, %d): %c \n",islandIndex, currentIsland.getCol(), currentIsland.getRow(),currentIsland.display(),targetIsland.getCol(),targetIsland.getRow(),currentIsland.display());
-                    if (solve(islandIndex + 1)) {
+                    if (forwardCheck() && solve(islandIndex + 1)) {
                         return true;
                     }
                     gameMap.removeBridges(targetIsland, currentIsland);
                 }
             }
         }
-        // System.out.println(islandIndex);
         return false;
     }
 
@@ -63,7 +61,7 @@ public class Solver {
     public Island getNextIslandUsingMRV(List<Island> islands) {
         Island mrvIsland = null;
         int minConnections = Integer.MAX_VALUE;
-    
+
         for (Island island : islands) {
             int possibleConnections = calculatePossibleConnections(island);
             if (possibleConnections < minConnections && island.getBridgesNeed() > 0) {
@@ -71,7 +69,7 @@ public class Solver {
                 mrvIsland = island;
             }
         }
-    
+
         return mrvIsland;
     }
 
@@ -87,4 +85,25 @@ public class Solver {
         }
         return connections;
     }
+
+    private boolean forwardCheck() {
+        for (Island island : islands) {
+            if (island.getBridgesNeed() > 0 && !canStillSolve(island)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canStillSolve(Island island) {
+        for (Island potentialIsland : island.getPotentialIslands()) {
+            for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
+                if (gameMap.canPlaceBridges(island, potentialIsland, bridgeCount)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
