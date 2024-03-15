@@ -30,7 +30,9 @@ public class Solver {
             for (int planks = 1; planks <= 3; planks++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, planks)) {
                     gameMap.addBridges(targetIsland, currentIsland, planks);
+                    // if (forwardCheck() && solve()) {
                     if (solve()) {
+
                         return true;
                     }
                     gameMap.removeBridges(targetIsland, currentIsland, planks);
@@ -62,5 +64,25 @@ public class Solver {
         return (int) island.getPotentialIslands().stream()
         .filter(targetIsland -> gameMap.canPlaceBridges(island, targetIsland, 1))
         .count();
+    }
+
+    private boolean forwardCheck() {
+        for (Island island : islands) {
+            if (island.getBridgesNeeded() > 0 && !canStillSolve(island)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canStillSolve(Island island) {
+        for (Island potentialIsland : island.getPotentialIslands()) {
+            for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
+                if (gameMap.canPlaceBridges(island, potentialIsland, bridgeCount)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

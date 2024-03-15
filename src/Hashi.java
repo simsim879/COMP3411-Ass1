@@ -1,9 +1,14 @@
 package src;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import src.map.*;
 public class Hashi {
-    public static void main(String[] args) {
-        String[] rows = args[0].split("\n");
+    public static void main(String[] args) throws IOException {
+        String puzzle = new String(Files.readAllBytes(Paths.get(args[0])));
+        String[] rows = puzzle.split("\n");
 
         int numRows = rows.length;
         int numCols = rows[0].length();
