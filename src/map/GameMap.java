@@ -16,24 +16,26 @@ public class GameMap {
         this.width = width;
         this.height = height;
         this.map = new Entity[height][width];
+        initializeMap(inputMap);
+    }
+
+    private void initializeMap(char[][] inputMap) {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                char element = inputMap[row][col];
-                if (element == '.') {
-                    map[row][col] = new Water(col,row);
-                } else {
-                    Island newIsland = new Island(col, row, element);
-                    map[row][col] = newIsland;
-                    islands.add(newIsland);
-                }
+                map[row][col] = createEntity(inputMap[row][col], col, row);
             }
         }
-        for (Island island : islands) {
-            island.findPotentialConnections(map);
+        islands.forEach(island -> island.findPotentialConnections(map));
+    }
+
+    private Entity createEntity(char element, int x, int y) {
+        if (element == '.') {
+            return new Water(x, y);
+        } else {
+            Island island = new Island(x, y, element);
+            islands.add(island);
+            return island;
         }
-        // for (Island island : islands) {
-        //     System.out.println(island.display());
-        // }
     }
 
     public void displayMap() {
@@ -56,12 +58,10 @@ public class GameMap {
         island2.setBridgesNeed(-planks);
     }
 
-    public void removeBridges(Island island1, Island island2) {
+    public void removeBridges(Island island1, Island island2, int planks) {
         Path path = new Path(island1, island2);
-        int planks = 0;
         for (int row = path.startRow; row <= path.endRow; row++) {
             for (int col = path.startCol; col <= path.endCol; col++) {
-                planks = ((Bridge) map[row][col]).getPlanks();
                 map[row][col] = new Water(row, col);
             }
         }

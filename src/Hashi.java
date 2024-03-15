@@ -23,7 +23,10 @@ public class Hashi {
 
         GameMap map = new GameMap(inputMap,numCols,numRows);
         Solver solver = new Solver(map);
-        solver.solve();
-        solver.getGameMap().displayMap();
+        if (solver.trySolve()) {
+            solver.getGameMap().displayMap();
+        } else {
+            System.out.println("can't find solution");
+        }
     }
 }

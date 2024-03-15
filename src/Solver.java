@@ -1,6 +1,9 @@
 package src;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
 import src.entities.Island;
 import src.map.GameMap;
 
@@ -18,11 +21,11 @@ public class Solver {
         // }
     }
 
-    public boolean solve() {
-        return solve(0);
+    public boolean trySolve() {
+        return solve();
     }
 
-    private boolean solve(int islandIndex) {
+    private boolean solve() {
         Island currentIsland = getNextIslandUsingMRV(islands);
         if (isSolved(islands)) {
             return true;
@@ -32,17 +35,17 @@ public class Solver {
         }
 
         if (currentIsland.getBridgesNeed() == 0) {
-            return solve(islandIndex + 1);
+            return solve();
         }
 
         for (Island targetIsland : currentIsland.getPotentialIslands()) {
             for (int bridgeCount = 1; bridgeCount <= 3; bridgeCount++) {
                 if (gameMap.canPlaceBridges(currentIsland, targetIsland, bridgeCount)) {
                     gameMap.addBridges(targetIsland, currentIsland, bridgeCount);
-                    if (forwardCheck() && solve(islandIndex + 1)) {
+                    if (forwardCheck() && solve()) {
                         return true;
                     }
-                    gameMap.removeBridges(targetIsland, currentIsland);
+                    gameMap.removeBridges(targetIsland, currentIsland, bridgeCount);
                 }
             }
         }
@@ -59,32 +62,21 @@ public class Solver {
     }
 
     public Island getNextIslandUsingMRV(List<Island> islands) {
-        Island mrvIsland = null;
-        int minConnections = Integer.MAX_VALUE;
+        Optional<Island> selectedIsland = islands.stream()
+            .filter(island -> island.getBridgesNeed() > 0)
+            .min(Comparator.comparingInt(island -> calculatePossibleConnections(island)));
 
-        for (Island island : islands) {
-            int possibleConnections = calculatePossibleConnections(island);
-            if (possibleConnections < minConnections && island.getBridgesNeed() > 0) {
-                minConnections = possibleConnections;
-                mrvIsland = island;
-            }
-        }
-
-        return mrvIsland;
+        return selectedIsland.orElse(null);
     }
 
     private int calculatePossibleConnections(Island island) {
-        int connections = 0;
-        // Assuming each island stores a list of potential islands it can connect to.
-        for (Island targetIsland : island.getPotentialIslands()) {
-            // For simplicity, assume any potential connection is valid.
-            // You might need a more sophisticated check here, considering the current state of the board.
-            if (gameMap.canPlaceBridges(island, targetIsland, 1)) {
-                connections++;
-            }
-        }
-        return connections;
+        long connections = island.getPotentialIslands().stream()
+                .filter(targetIsland -> gameMap.canPlaceBridges(island, targetIsland, 1))
+                .count();
+        
+        return (int) connections;
     }
+    
 
     private boolean forwardCheck() {
         for (Island island : islands) {
